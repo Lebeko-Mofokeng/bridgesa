@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content = "IE=edge">
+		<meta name = "viewport" content= "width=device-width, initial-scale=1.0">
+		<title>Bridge Login And Registration</title>
+		<link rel = "stylesheet" href = "loginandregistration.css">
+		
+	</head>
+	
+	<body>
+		<div class = "hero">
+			<div class = "form-box">
+				<div class = "button-box">
+					<div id = "btn"></div>
+					<button id = "switchregisteruser" type = "button" class = "toggle-btn">Register User</button>
+					<button id = "switchlogin" type = "button" class = "toggle-btn">Log In</button>
+					<button id = "switchregistercompany" type = "button" class = "toggle-btn">Register Company</button>					
+				</div>
+				<div id = "login" class = "input-group">
+					<input id = "emailLogin" type = "email" class = "input-field" placeholder = "Email" required>
+					<input id = "passwordLogin" type = "password" class = "input-field" placeholder = "Password" required>
+					<button id = "loginbtn" type = "submit" class = "submit-btn">Login</button><br><br>
+					<a href = "ForgotPassword.html">Forgot Password</a>
+				</div>
+				
+				<div id = "registeruser" class = "input-group">
+					<input id = "emailusersu" type = "email" class = "input-field" placeholder = "Email" required>
+					<input id = "nameusersu" type = "text" class = "input-field" placeholder = "Name" required>
+					<input id = "howmuchusersu" type = "number" class = "input-field" placeholder = "How Much Are You Willing To Invest" required>
+					<input id = "passwordusersu" type = "password" class = "input-field" placeholder = "Password" required>
+					<input id = "cpasswordusersu" type = "password" class = "input-field" placeholder = "Confirm Password" required>
+					<button id = "signupuserbtn" type = "submit" class = "submit-btn">Sign Up</button>
+					<label id = "Upload" class = "input-field"></label>
+				</div>
+				
+				<div id = "registercompany" class = "input-group">
+					<input id = "emailcompany" type = "email" class = "input-field" placeholder = "Email" required>
+					<div class = "select">
+						<select id = "registered" name = "format" id = "format">
+							<option selected disabled>Are You Registered</option>
+							<option value = "Yes">Yes</option>
+							<option value = "No">No</option>
+						</select>
+					</div>
+					<input id = "companyname" type = "text" class = "input-field" placeholder = "Company Name" required>
+					<input id = "directorname" type = "text" class = "input-field" placeholder = "Director Name" required>
+					<input id = "interestRateCompany" type = "number" class = "input-field" placeholder = "Interest Rate" required>
+					<input id = "pricePerShareCompany" type = "number" class = "input-field" placeholder = "Price Per Share" required>
+					<input id = "locationCompany" type = "text" class = "input-field" placeholder = "Where Is The Company Located" required>
+					<input id = "passwordCompany" type = "password" class = "input-field" placeholder = "Password" required>
+					<input id = "cpasswordCompany" type = "password" class = "input-field" placeholder = "Confirm Password" required>
+					<img id = "myimg" class = "input-field" ><br><br>
+					<button id = "selectbtn" type = "submit" class = "submit-btn">Select Image</button><br>
+					<button id = "registercompanybtn" type = "submit" class = "submit-btn">Register</button><br>
+				</div>
+			</div>
+		</div>
+		
+	
+		
+	</body>
+	
+	<script type="module">
+	  // Import the functions you need from the SDKs you need
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+	  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+	  import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+	  import { getDatabase, ref as ref_database, set, child, update, remove, get  } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+	  import { getStorage, ref as ref_storage, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
+		// TODO: Add SDKs for Firebase products that you want to use
+	  // https://firebase.google.com/docs/web/setup#available-libraries
+
+	  // Your web app's Firebase configuration
+	  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	  const firebaseConfig = {
+		apiKey: "AIzaSyDecaBFp1bFl_VO2hu4mdAUGlFpa-mopeI",
+		authDomain: "bridgefa-fa2da.firebaseapp.com",
+		databaseURL: "https://bridgefa-fa2da-default-rtdb.firebaseio.com",
+		projectId: "bridgefa-fa2da",
+		storageBucket: "bridgefa-fa2da.appspot.com",
+		messagingSenderId: "228760175922",
+		appId: "1:228760175922:web:882bbc45d2a796184f432b",
+		measurementId: "G-XPEBH2CP8G"
+	  };
+
+	  // Initialize Firebase
+	  const app = initializeApp(firebaseConfig);
+	  const analytics = getAnalytics(app);
+	  const auth = getAuth(app);
+	  const database = getDatabase(app);
+	  const storage = getStorage(app);
+		  
+	
+	  
+	  var l = document.getElementById("login");
+	  var u = document.getElementById("registeruser");
+	  var c = document.getElementById("registercompany");
+	  var b = document.getElementById("btn");
+	  var switchlogin = document.getElementById("switchlogin");
+	  var switchregisteruser = document.getElementById("switchregisteruser");
+	  var switchregistercompany = document.getElementById("switchregistercompany");
+	  var loginbtn = document.getElementById("loginbtn");
+	  var signupuserbtnv = document.getElementById("signupuserbtn");
+	  var registercompanybtn = document.getElementById("registercompanybtn");
+	  
+	  var ImgName, ImgUrl;
+	  var files = [];
+	  var reader;
+	  var uploadBtn = document.getElementById("uploadbtn");
+	  var img = document.getElementById("myimg");
+	  
+	  document.getElementById("selectbtn").onclick = function(e){
+			//alert("Keep Calm, It Will All Work Out");
+			var input = document.createElement('input');
+			input.type = 'file';
+			
+			input.onchange = e => {
+				files = e.target.files;
+				reader = new FileReader();
+				reader.onload = function(){
+				img.src = reader.result;
+				}
+				reader.readAsDataURL(files[0]);
+			}
+			
+			input.click();
+	  }
+	  
+	  
+	  
+	  function SwitchRegisterCompany(){
+		l.style.left = "-450px";
+		u.style.left = "-450px";
+		b.style.left = "220px";
+		c.style.left = "55px";
+	  }
+	  
+	  function SwitchRegisterUser(){
+		l.style.left = "450px";
+		u.style.left = "55px";
+		b.style.left = "0";
+		c.style.left = "450px";
+	  }
+
+			
+	  function SwitchLogin(){
+		l.style.left = "55px";
+		u.style.left = "-450px";
+		b.style.left = "110px";
+		c.style.left = "450px";
+	  }
+	  
+	  
+	  function SignUpUser(){
+	  
+	  var email = document.getElementById("emailusersu").value;
+	  var name = document.getElementById("nameusersu").value;
+	  var howmuch = document.getElementById("howmuchusersu").value;
+	  var password = document.getElementById("passwordusersu").value;
+	  var cpassword = document.getElementById("cpasswordusersu").value;
+	  var imageUrl = "https://firebasestorage.googleapis.com/v0/b/bridgefa-fa2da.appspot.com/o/TS%20Legacy%20Investing%2Fprofile.jpeg?alt=media&token=688ca0cb-cd0e-44dc-b731-55bbf7ff66f6"
+	  var subscribed = "Not Subscribed";
+	  var balance = 0;
+	  var interestRate = 0;
+	  var pricePerShare = 0;
+	  var userType = "Investor";
+	  
+		  if(password == cpassword){
+			createUserWithEmailAndPassword(auth, email, password)
+					.then((userCredential) => {
+					// Signed in 
+					const user = userCredential.user;
+					document.getElementById("Upload").innerHTML = 'Uploading';
+				
+					set(ref_database(database, 'Users/' + user.uid), {
+						balance: balance,
+						email: email,
+						fullname: name,
+						interestRate: interestRate,
+						imageUrl: imageUrl,
+						pricePerShare: pricePerShare,
+						subscribed: subscribed,
+						userId: user.uid,
+						userType: userType
+					}).then(() => {
+						// Data saved successfully!
+						
+						sendEmailVerification(auth.currentUser)
+						.then(() => {
+							alert("Email Verification Was Sent");
+							document.getElementById('emailusersu').value = '';
+							document.getElementById("nameusersu").value = '';
+							document.getElementById("howmuchusersu").value = '';
+							document.getElementById("passwordusersu").value = '';
+							document.getElementById("cpasswordusersu").value = '';
+							document.getElementById("Upload").innerHTML = '';
+						});
+					})
+					.catch((error) => {
+						// The write failed...
+						alert(error);
+					});
+					
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+					const errorMessage = error.message;
+					// ..
+					alert(errorMessage);
+				});
+		  }else{
+			document.getElementById("Upload").innerHTML = 'Password Doesnt Match';
+		  }
+		
+	  }
+	  
+	  
+	  function RegisterCompany(){
+	  
+	  
+	  var email = document.getElementById("emailcompany").value;
+	  var registered = document.getElementById("registered").value;
+	  var companyname = document.getElementById("companyname").value;
+	  var directorname = document.getElementById("directorname").value;
+	  var location = document.getElementById("locationCompany").value;
+	  var password = document.getElementById("passwordCompany").value;
+	  var cpassword = document.getElementById("cpasswordCompany").value;
+	  var subscribed = "Not Subscribed";
+	  var balance = 0;
+	  var interestRate = document.getElementById("interestRateCompany").value;
+	  var pricePerShare = document.getElementById("pricePerShareCompany").value;
+	  var iR = parseInt(interestRate);
+	  var pPS = parseInt(pricePerShare);
+	  var userType = "Company";
+	  
+		  if(password == cpassword){
+			const uploadRef = ref_storage(storage, 'Logo/' + companyname + '/' + "companyLogo");
+			createUserWithEmailAndPassword(auth, email, password)
+					.then((userCredential) => {
+					// Signed in 
+					const user = userCredential.user;
+					document.getElementById("Upload").innerHTML = 'Uploading';
+					
+					uploadBytes(uploadRef, files[0]).then((snapshot) => {
+						//alert("Sucess");
+						getDownloadURL(ref_storage(storage, 'Logo/' + companyname + '/' + "companyLogo"))
+							.then((url) => 
+								{
+									ImgUrl = url;
+									
+									set(ref_database(database, 'Users/' + user.uid),{
+										balance: balance,
+										companyName: companyname,
+										email: email,
+										fullname: directorname,
+										imageUrl: ImgUrl,
+										interestRate: iR,
+										location: location,
+										pricePerShare: pPS,
+										registered: registered,
+										subscribed: subscribed,
+										userId: user.uid,
+										userType: userType
+									}).then(() => {
+										// Data saved successfully!
+										
+										sendEmailVerification(auth.currentUser)
+										.then(() => {
+											alert("Email Verification Was Sent");
+											document.getElementById("emailcompany").value = '';
+											document.getElementById("registered").value = '';
+											document.getElementById("companyname").value = '';
+											document.getElementById("directorname").value = '';
+											document.getElementById("locationCompany").value = '';
+											document.getElementById("passwordCompany").value = '';
+											document.getElementById("cpasswordCompany").value = '';
+											document.getElementById("interestRateCompany").value = '';
+											document.getElementById("pricePerShareCompany").value = '';
+											document.getElementById("Upload").innerHTML = '';
+											img.src = "";
+										});
+									})
+									.catch((error) => {
+										// The write failed...
+										alert(error);
+									});
+								}
+							);
+					
+					});
+					
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+					const errorMessage = error.message;
+					// ..
+					alert(errorMessage);
+				});
+		  }else{
+			document.getElementById("Upload").innerHTML = 'Password Doesnt Match';
+		  }
+		
+	  }
+	  
+	  function LoginForm(){
+		var email = document.getElementById('emailLogin').value;
+		var password = document.getElementById('passwordLogin').value;
+		
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Signed in 
+				const user = userCredential.user;
+				// ...
+				if(!user.emailVerified){
+					alert("email not Verified");
+				}else{
+					window.location.assign("Home.html");
+				}
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				alert(errorMessage);
+			});
+	  }
+	  switchlogin.addEventListener('click', SwitchLogin);
+	  switchregisteruser.addEventListener('click', SwitchRegisterUser);
+	  switchregistercompany.addEventListener('click', SwitchRegisterCompany);
+	  signupuserbtnv.addEventListener('click', SignUpUser);
+	  registercompanybtn.addEventListener('click', RegisterCompany);
+	  loginbtn.addEventListener('click', LoginForm);
+	  
+			
+	</script>
+</html>

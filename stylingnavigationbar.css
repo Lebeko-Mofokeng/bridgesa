@@ -1,0 +1,292 @@
+*{
+	margin:0px;
+	padding:0px;
+	box-sizing: border-box;
+}
+
+nav{
+	width:100%;
+	height: 75px;
+	line-height: 75px;
+	padding: 0px 30px;
+	position: absolute;
+	box-shadow: 0 5px 25px rgba(0,0,0,.1);
+	background-image: linear-gradient(#FFFFFF);
+}
+
+nav .logo p{
+	font-size: 15px;
+	font-weight: bold;
+	float: right;
+	color: #0000FF;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	cursor: pointer;
+	
+}
+
+nav ul{
+	float: left;
+	padding-right: 80px;
+}
+
+nav li{
+	display: inline-block;
+	list-style: none;
+}
+
+nav li a{
+	font-size: 15px;
+	text-transform: uppercase;
+	padding: 0px 30px;
+	color: #0000FF;
+	text-decoration: none;
+}
+
+nav li a:hover{
+	color: #FFA500;
+	transition: all 0.4s ease 0s;
+}
+
+nav ul li ul.dropdown li{
+	display: block;
+	box-shadow: 0 5px 50px rgba(0,0,0,.5);
+}
+
+nav ul li ul.dropdown{
+	width: 28.5%;
+	background-image: linear-gradient(#FFFFFF, #0000FF);
+	position: absolute;
+	z-index: 999;
+	display: none;
+}
+
+nav ul li ul li a{
+	font-size: 12px;
+	padding: 0px 5px;
+	color: white;
+	
+}
+
+
+nav ul li:hover ul.dropdown{
+	display:block;
+}
+
+@media screen and (max-width: 900px)
+{
+	nav{
+		width:100%;
+		height: 75px;
+		line-height: 75px;
+		padding: 0px 30px;
+		position: absolute;
+		box-shadow: 0 5px 25px rgba(0,0,0,.1);
+		background-image: linear-gradient(#FFFFFF);
+	}
+
+	nav .logo p{
+		font-size: 15px;
+		font-weight: bold;
+		float: right;
+		color: #0000FF;
+		text-transform: uppercase;
+		letter-spacing: 1.5px;
+		cursor: pointer;
+		
+	}
+
+	nav ul{
+		float: left;
+		padding-right: 20px;
+	}
+
+	nav li{
+		display: inline-block;
+		list-style: none;
+	}
+
+	nav li a{
+		font-size: 15px;
+		text-transform: uppercase;
+		padding: 0px 5px;
+		color: #0000FF;
+		text-decoration: none;
+	}
+
+	
+	nav li a:hover{
+		color: #FFA500;
+		transition: all 0.4s ease 0s;
+	}
+
+	nav ul li ul.dropdown li{
+		display: block;
+		box-shadow: 0 5px 25px rgba(0,0,0,.5);
+	}
+
+	nav ul li ul.dropdown{
+		width: 35.2%;
+		padding: 0px 15px;
+		background-image: linear-gradient(#FFFFFF, #0000FF);
+		position: absolute;
+		z-index: 999;
+		display: none;
+	}
+
+	nav ul li ul li a{
+		font-size: 12px;
+		padding: 0px 5px;
+		color: white;
+		
+	}
+
+
+	nav ul li:hover ul.dropdown{
+		box-shadow: 0 5px 25px rgba(0,0,0,.1);
+		display:block;
+	}
+}
+
+@media screen and (max-width: 600px)
+{
+	nav{
+		width:100%;
+		height: 75px;
+		line-height: 75px;
+		padding: 0px 10px;
+		position: absolute;
+		box-shadow: 0 5px 25px rgba(0,0,0,.1);
+		background-image: linear-gradient(#FFFFFF);
+	}
+
+	nav .logo p{
+		font-size: 15px;
+		font-weight: bold;
+		float: right;
+		color: #0000FF;
+		text-transform: uppercase;
+		letter-spacing: 1.5px;
+		cursor: pointer;
+		
+	}
+
+	nav ul{
+		float: left;
+		padding-right: 10px;
+	}
+
+	nav li{
+		display: inline-block;
+		list-style: none;
+	}
+
+	nav li a{
+		font-size: 15px;
+		text-transform: uppercase;
+		padding: 0px 5px;
+		color: #0000FF;
+		text-decoration: none;
+	}
+
+	
+	nav li a:hover{
+		color: #FFA500;
+		transition: all 0.4s ease 0s;
+	}
+
+	nav ul li ul.dropdown li{
+		display: block;
+		box-shadow: 0 5px 25px rgba(0,0,0,.5);
+	}
+
+	nav ul li ul.dropdown{
+		width: 31.2%;
+		padding: 0px 2px;
+		background-image: linear-gradient(#FFFFFF, #0000FF);
+		position: absolute;
+		z-index: 999;
+		display: none;
+	}
+
+	nav ul li ul li a{
+		font-size: 8px;
+		padding: 0px 5px;
+		color: white;
+		
+	}
+
+
+	nav ul li:hover ul.dropdown{
+		box-shadow: 0 5px 25px rgba(0,0,0,.1);
+		display:block;
+	}
+}
+
+/*
+	.content-items img{
+		width:100%;
+		height:100vh;
+		background-size: cover;
+		background-position: center;
+	}
+*/
+
+
+
+.homeul{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background-image: linear-gradient(#FFFFFF, #0000FF);
+	background-position: absolute;
+	background-size: auto;	
+}
+
+.box ul{
+	position: relative;
+	background-image: linear-gradient(#FFFFFF, #0000FF);
+	
+}
+
+.box ul li{
+	list-style: none;
+	padding: 10px;
+	width: 100%;
+	background: #11f8fb;
+	box-shadow: 0 5px 25px rgba(0,0,0,.1);
+	background-image: linear-gradient(#FFFFFF, #0000FF);
+}
+
+.box ul h2{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+
+.box ul li:hover{
+	transform: scale(1.1);
+	z-index: 100;
+	background: #25bcff;
+	box-shadow: 0 5px 25px rgba(0,0,0,.2);
+	color: #fff;
+}
+
+.submit-btn{
+	width: 85%;
+	padding: 10px 30px;
+	cursor: pointer;
+	display: block;
+	margin: auto;
+	background: linear-gradient(to right, #FFFFFF, #0000FF);
+	border: 0;
+	outline: none;
+	border-radius: 30px;
+}
+
+
+
+

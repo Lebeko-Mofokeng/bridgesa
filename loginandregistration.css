@@ -1,0 +1,424 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.hero{
+	height: 100%;
+	width: 100%;
+	background-position: center;
+	background-image: linear-gradient(#FFFFFF, #0000FF);
+	background-size: auto;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-box{
+	width: 380px;
+	height: 550px;
+	position: relative;
+	margin: 6% auto;
+	background-image: linear-gradient(#FFFFFF, #0000FF);
+	padding: 5px;
+	overflow:hidden;
+}
+.button-box{
+	width: 330px;
+	margin: 30px auto;
+	position: relative;
+	box-shadow: 0 0 20px 9px #0000FF;
+	border-radius: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.toggle-btn{
+	padding-top: 10px;
+	padding-right: 30px;
+	padding-bottom: 10px;
+	padding-left: 30px;
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	outline: none;
+	position: relative;
+	display: inline-block;
+}
+
+#btn{
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 110px;
+	height: 100%;
+	background: linear-gradient(to right, #FFFFFF, #0000FF);
+	border-radius: 30px;
+	transition: .5s;
+}
+
+.input-group{
+	top: 110px;
+	position: absolute;
+	width: 280px;
+	transition: .5s;
+	display: block;
+	overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.input-field{
+	width: 100%;
+	padding: 10px 0;
+	margin: 5px 0;
+	border-left: 0;
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 1px solid #999;
+	outline: none;
+	background: transparent;
+	display: block;
+}
+
+.submit-btn{
+	width: 85%;
+	padding: 10px 30px;
+	cursor: pointer;
+	display: block;
+	margin: auto;
+	background: linear-gradient(to right, #FFFFFF, #0000FF);
+	border: 0;
+	outline: none;
+	border-radius: 30px;
+}
+
+#login{
+	left: 450px;
+}
+
+#registeruser{
+	left: 50px;
+}
+
+#forgotpassword{
+	left: 50px;
+}
+
+#registercompany{
+	left: 450px;
+	overflow-y: scroll; 
+	height:450px;
+}
+
+#changeshareprice{
+	left: 50px;
+	height:450px;
+}
+
+#companylogo{
+	left: 50px;
+}
+
+select {
+	width: 100%;
+	padding: 10px 0;
+	margin: 5px 0;
+	border-left: 0;
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 1px solid #999;
+	outline: none;
+	background: transparent;
+	display: block;
+}
+
+img{
+	margin: 10px; 
+	height: 200px; 
+	width: 200px; 
+	border: 2px solid black; 
+	display: block; 
+	position: relative;
+}
+
+.entirebody{
+	height: 100%;
+	width: 100%;
+	background-image: linear-gradient(#FFFFFF, #0000FF);
+	background-position: center;
+	background-size: auto;
+	position: absolute;
+	display: block;
+}
+
+.userdetails{
+	height: 70%;
+	width: 25%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	position: relative;
+	float: right;
+	border: .5px solid #999;
+}
+.companydetailsl{
+	height: 100%;
+	width: 75%;
+	position: absolute;
+	text-align: center;
+	float: left;
+}
+
+
+.invest-field{
+	width: 75%;
+	padding: 10px 0;
+	margin: 10px;
+	outline: none;
+	background: transparent;
+	display: block;
+}
+
+.invest-field2{
+	width: 75%;
+	padding: 10px 0;
+	margin: 10px;
+	outline: none;
+	border-left: 0;
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 2px solid #999;
+	background: transparent;
+	display: block;
+}
+
+.user-field{
+	width: 25%;
+	padding: 10px 0;
+	margin: 10px;
+	outline: none;
+	background: transparent;
+	display: block;
+}
+
+
+
+.invest-button{
+	width: 75%;
+	padding: 10px 0;
+	cursor: pointer;
+	margin: 10px;
+	margin-top: 20px;
+	background: linear-gradient(to right,#FFFFFF, #0000FF);
+	border: 0;
+	outline: none;
+	border-radius: 30px;
+	display: block;
+}
+
+.company-logoInvestPage{
+	margin: 10px; 
+	height: 50%; 
+	width: 75%; 
+	border: 2px solid black; 
+	display: block; 
+	position: relative;
+}
+
+
+@media screen and (max-width: 600px)
+{
+	.entirebody{
+		height: 100%;
+		width: 100%;
+		background-image: linear-gradient(#FFFFFF, #0000FF);
+		background-position: center;
+		background-size: auto;
+		position: absolute;
+		display: block;
+	}
+	
+	.userdetails{	
+		height: 25%;
+		width: 100%;
+		text-align: center;
+		top: 0;
+		display: inline-block;
+		position: absolute;
+	}
+	
+	.companydetailsl{
+		position: absolute;
+		height: 75%;
+		width: 100%;
+		text-align: center;
+		bottom: 0;
+		display: inline-block;
+	}
+	
+	.invest-field{
+		width: 100%;
+		padding: 5px 0;
+		margin: 5px;
+		outline: none;
+		background: transparent;
+		display: block;
+	}
+
+	.invest-field2{
+		width: 80%;
+		padding: 5px 0;
+		outline: none;
+		border-left: 0;
+		border-top: 0;
+		border-right: 0;
+		border-bottom: 2px solid #999;
+		background: transparent;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.user-field{
+		width: 100%;
+		padding: 5px 0;
+		margin: 5px;
+		outline: none;
+		background: transparent;
+		display: block;
+	}
+
+
+
+	.invest-button{
+		width: 50%;
+		padding: 5px 0;
+		cursor: pointer;
+		margin-top: 20px;
+		background: linear-gradient(to right,#FFFFFF, #0000FF);
+		border: 0;
+		outline: none;
+		border-radius: 30px;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.company-logoInvestPage{
+		height: 25%; 
+		width: 50%; 
+		border: 2px solid black; 
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		
+	}
+	
+}
+
+@media screen and (max-width: 900px)
+{
+	.entirebody{
+		height: 100%;
+		width: 100%;
+		background-image: linear-gradient(#FFFFFF, #0000FF);
+		background-position: center;
+		background-size: auto;
+		position: absolute;
+		display: flex;
+	}
+	
+	.userdetails{	
+		height: 30%;
+		width: 100%;
+		text-align: center;
+		top: 0;
+		display: inline-block;
+		position: absolute;
+	}
+	
+	.companydetailsl{
+		position: absolute;
+		height: 70%;
+		width: 100%;
+		text-align: center;
+		bottom: 0;
+		display: inline-block;
+	}
+	
+	.invest-field{
+		width: 100%;
+		padding: 5px 0;
+		margin: 5px;
+		outline: none;
+		background: transparent;
+		display: block;
+	}
+
+	.invest-field2{
+		width: 80%;
+		padding: 5px 0;
+		outline: none;
+		border-left: 0;
+		border-top: 0;
+		border-right: 0;
+		border-bottom: 2px solid #999;
+		background: transparent;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.user-field{
+		width: 100%;
+		padding: 5px 0;
+		margin: 5px;
+		outline: none;
+		background: transparent;
+		display: block;
+	}
+
+
+
+	.invest-button{
+		width: 50%;
+		padding: 5px 0;
+		cursor: pointer;
+		margin-top: 20px;
+		background: linear-gradient(to right,#FFFFFF, #0000FF);
+		border: 0;
+		outline: none;
+		border-radius: 30px;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.company-logoInvestPage{
+		height: 25%; 
+		width: 50%; 
+		border: 2px solid black; 
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

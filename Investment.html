@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content = "IE=edge">
+	<meta name = "viewport" content= "width=device-width, initial-scale=1.0">
+	<title>Investment</title>
+	<link rel = "stylesheet" href= "stylingnavigationbar.css">
+</head>
+<body>
+	<nav>
+			<ul>
+			<li>
+				<a href="#">Investment</a>
+				<ul class = "dropdown">
+					<li><a href="Home.html">Home</a></li>
+				<li><a href="Investment.html">Investment</a></li>
+				<li><a href="Feedback.html">Feedback</a></li>
+				<li><a href="Settings.html">Settings</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+			<ul>
+			<li><a href="Home.html">Home</a></li>
+			<li><a href="Investment.html">Investment</a></li>
+			<li>
+				<a href="#">Settings</a>
+				<ul class = "dropdown">
+					<li><a id = "changesp" href="ChangeSharePrice.html">Change Share Price</a></li>
+					<li><a id = "updatePI" href="UpdatePersonalInfo.html">Update Personal Information</a></li>
+					<li><a id = "security">Security</a></li>
+					<!--href="Security.html"-->
+					<li><a id = "legalP">Legal & Policies</a></li>
+					<!--href="LegalandPolicies.html"-->
+					<li><a href="Signout.html">Sign Out</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+	</nav><br><br><br><br><br>
+	
+	<div class = "homeul">
+			<div class = "box">
+				<ul id="list" class = "ullist">
+				</ul>
+			</div>
+	</div>
+	
+	<script type="module">
+	  // Import the functions you need from the SDKs you need
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+	  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+	  import { getDatabase, set, ref, child, get } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+	  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+	 
+	 // TODO: Add SDKs for Firebase products that you want to use
+	  // https://firebase.google.com/docs/web/setup#available-libraries
+
+	  // Your web app's Firebase configuration
+	  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	  const firebaseConfig = {
+		apiKey: "AIzaSyDecaBFp1bFl_VO2hu4mdAUGlFpa-mopeI",
+		authDomain: "bridgefa-fa2da.firebaseapp.com",
+		databaseURL: "https://bridgefa-fa2da-default-rtdb.firebaseio.com",
+		projectId: "bridgefa-fa2da",
+		storageBucket: "bridgefa-fa2da.appspot.com",
+		messagingSenderId: "228760175922",
+		appId: "1:228760175922:web:882bbc45d2a796184f432b",
+		measurementId: "G-XPEBH2CP8G"
+	  };
+
+	  // Initialize Firebase
+	  const app = initializeApp(firebaseConfig);
+	  const analytics = getAnalytics(app);
+	  const auth = getAuth(app);
+	  const database = getDatabase(app);
+	  
+	  var listNum = 0;
+	  var changesp = document.getElementById("changesp");
+	  var updatePI = document.getElementById("updatePI");
+	  var security = document.getElementById("security");
+	  var legalP = document.getElementById("legalP");
+	  
+	  function NotAvailable(){
+		alert("Currently Not Available");
+	  }
+	  
+	  security.addEventListener('click', NotAvailable); 
+	  legalP.addEventListener('click', NotAvailable);
+	  
+	  function Check(){
+		
+		//var email = document.getElementById("userEmail");
+		var company = "Company";
+						
+			onAuthStateChanged(auth, (user) => {
+			if (user) {
+				// User is signed in, see docs for a list of available properties
+				// https://firebase.google.com/docs/reference/js/firebase.User
+				const uid = user.uid;
+				const dbRef = ref(database);
+				
+				get(child(dbRef, 'Users/' + uid)).then((snapshot)=>{
+					if(snapshot.exists()){
+						//email.innerHTML = snapshot.val().email;
+						var type = snapshot.val().userType;
+						if(type == company){
+						
+						}else{
+							changesp.style.display = "none";
+						}
+					}else{
+						alert("No Data");
+					}
+				}).catch((error) =>{
+					alert("Unsuccessful, error " + error);
+				});
+			} else {
+				// User is signed out
+				// ...
+				alert("User Signed Out");
+			  }
+			});
+	  }
+	  
+	  
+	  function addItemsToList(companyId, companyName, estimatedprojections, investmentId, logo, pps, intRate, shares, userId){
+			var ul = document.getElementById("list");
+			var header = document.createElement("h2");
+			var listItem = document.createElement("li");
+			
+			
+			var img = document.createElement("img");
+			
+			img.src = logo;
+			img.width = 180;
+			img.height = 80;
+			
+			header.appendChild(img);
+			
+			listItem.innerHTML='Company Name: ' + companyName + 
+						"<br />" +  'Estimated Projections: R' + estimatedprojections + '.00' +
+						"<br />" +  'Shares Purchased: ' + shares;
+			
+			ul.appendChild(header);
+			ul.appendChild(listItem);
+			
+			listItem.addEventListener('click', Alert);
+			function Alert(){
+				localStorage.setItem('imageUrl', logo);
+				localStorage.setItem('companyName', companyName);
+				localStorage.setItem('companyId', companyId);
+				localStorage.setItem('investmentId', investmentId);
+				localStorage.setItem('pps', pps);
+				localStorage.setItem('intRate', intRate);
+				localStorage.setItem('shares', shares);
+				localStorage.setItem('userId', userId);
+				window.location.assign("WithdrawalPage.html");	  
+			}
+	  }
+	  
+	  function FetchAllData(){
+			
+			
+			const dbRef = ref(database);
+			Check();
+			
+			onAuthStateChanged(auth, (user) => {
+			 if (user) {
+			// User is signed in, see docs for a list of available properties
+			// https://firebase.google.com/docs/reference/js/firebase.User
+			const uid = user.uid;
+			
+			get(child(dbRef, 'Investments/' + uid)).then((snapshot)=>{
+				snapshot.forEach(
+					function(ChildSnapshot){
+						if(ChildSnapshot.exists()){
+							let companyId = ChildSnapshot.val().companyId;
+							let companyName = ChildSnapshot.val().companyName;
+							let estimatedprojections = ChildSnapshot.val().estimatedprojections;
+							let investmentId = ChildSnapshot.val().id;
+							let logo = ChildSnapshot.val().logo;
+							let pps = ChildSnapshot.val().pricePerShare;
+							let intRate = ChildSnapshot.val().interestRate;
+							let shares = ChildSnapshot.val().shares;
+							let userId = ChildSnapshot.val().userId;
+										
+							addItemsToList(companyId, companyName, estimatedprojections, investmentId, logo, pps, intRate, shares, userId);
+						}else{
+							alert("No Data");
+						}
+					}
+				);
+			}).catch((error) =>{
+				alert("Unsuccessful, error " + error);
+			});
+					
+		  } else {
+			// User is signed out
+			// ...
+			alert("User Signed Out");
+		  }
+		});
+			
+			
+		  }
+		  
+		  window.onload = FetchAllData();
+		  
+		  
+			
+	</script>
+	
+</body>
+</html>

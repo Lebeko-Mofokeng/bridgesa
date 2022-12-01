@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content = "IE=edge">
+	<meta name = "viewport" content= "width=device-width, initial-scale=1.0">
+	<title>Withdraw Investment</title>
+	<link rel = "stylesheet" href = "loginandregistration.css">
+</head>
+<body>
+	
+	<div class = "entirebody">
+		<div id = "left" class = "companydetailsl">
+				<img id = "companylogoinvestpage" class = "company-logoInvestPage" >
+				<label id = "companyName" class = "invest-field">Company Name</label><br>
+				<label id = "sharesOwned" class = "invest-field">Shares Owned</label>
+				<input id = "sharesTS" type = "number" class = "invest-field2" placeholder = "Amount Of Shares You'd Like To Sell" required>
+				<button id = "withdrawBtn" type = "submit" class = "invest-button">Withdraw</button><br>
+		</div>
+		<div id = "right" class = "userdetails">
+			<label id = "userName" class = "user-field"></label><br>
+			<label id = "userBalance" class = "user-field"></label>
+			<label id = "userEmail" class = "user-field"></label>
+		</div>
+	</div>
+	
+</body>
+</html>
+<script type="module">
+	// Import the functions you need from the SDKs you need
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+	import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+	import { getDatabase, set, ref, child, get, remove, push, update } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+	import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+	  
+	  
+	// TODO: Add SDKs for Firebase products that you want to use
+	// https://firebase.google.com/docs/web/setup#available-libraries
+	// Your web app's Firebase configuration
+	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	const firebaseConfig = {
+	apiKey: "AIzaSyDecaBFp1bFl_VO2hu4mdAUGlFpa-mopeI",
+	authDomain: "bridgefa-fa2da.firebaseapp.com",
+	databaseURL: "https://bridgefa-fa2da-default-rtdb.firebaseio.com",
+	projectId: "bridgefa-fa2da",
+	storageBucket: "bridgefa-fa2da.appspot.com",
+	messagingSenderId: "228760175922",
+	appId: "1:228760175922:web:882bbc45d2a796184f432b",
+	measurementId: "G-XPEBH2CP8G"
+	};
+	// Initialize Firebase
+	const app = initializeApp(firebaseConfig);
+	const analytics = getAnalytics(app);
+	const database = getDatabase(app);
+	const auth = getAuth(app);
+	 
+	var companylogo = document.getElementById("companylogoinvestpage");
+	const url = localStorage.getItem("imageUrl");
+	const shares = localStorage.getItem("shares")
+	const userId = localStorage.getItem("userId");
+	const companyNP = localStorage.getItem("companyName");
+	const companyId = localStorage.getItem("companyId");
+	const investmentId = localStorage.getItem("investmentId");
+	const pps = localStorage.getItem("pps");
+	const intRate = localStorage.getItem("intRate");
+	
+	 
+	var withdrawBtn = document.getElementById("withdrawBtn");
+	var sharesOwned = document.getElementById("sharesOwned");
+	var companyNameP = document.getElementById("companyName");
+	  
+	  
+	  
+	 
+	companyNameP.innerHTML= "Company Name: " + companyNP;
+	sharesOwned.innerHTML = "Shares Owned: " + shares;	   
+	companylogo.src = url;
+	
+	function Withdraw(){
+		var s = parseInt(shares);
+		var p = parseInt(pps)
+		var amount = document.getElementById('sharesTS').value;
+		var am = parseInt(amount)
+		var a = parseFloat(am) * parseFloat(p);
+		var i = parseInt(intRate)/100;
+		
+		
+		
+		
+		
+		var remainingShares = s - am;
+		var q = remainingShares * p;
+		var estimatedP = q * i;
+		
+		//alert(estimatedP);
+		
+		set(ref(database, 'SharesReturned/' + userId + '/' + companyId + '/' + investmentId),{
+			companyId: companyId,
+			companyName: companyName,
+			id: investmentId,
+			logo: url,
+			payment: a,
+			shares: am,
+			userId: userId
+		}).then(() => {
+			update(ref(database, 'Investments/' + userId + '/' + companyId),{
+				shares: remainingShares,
+				quote: q,
+				estimatedprojections: estimatedP
+			}).then(() => {
+				// Data saved successfully!
+				alert("Successfully Withdrawn, Your Withdrawal Will Be Proccessed");
+				window.location.assign("Home.html");
+			})
+		})
+		.catch((error) => {
+			// The write failed...
+			alert(error);
+		});	
+	}
+	  
+	  
+		
+	function Check(){
+		
+	var email = document.getElementById("userEmail");
+	var balance = document.getElementById("userBalance");
+	var name = document.getElementById("userName");
+						
+		onAuthStateChanged(auth, (user) => {
+		  if (user) {
+			// User is signed in, see docs for a list of available properties
+			// https://firebase.google.com/docs/reference/js/firebase.User
+			const uid = user.uid;
+			const dbRef = ref(database);
+			
+			get(child(dbRef, 'Users/' + uid)).then((snapshot)=>{
+				if(snapshot.exists()){
+					email.innerHTML = "User Email: " + snapshot.val().email;
+					name.innerHTML = "User Name: " + snapshot.val().fullname;
+					balance.innerHTML = "Balance: R" + snapshot.val().balance + ".00"; 
+					
+				}else{
+					alert("No Data");
+				}
+			}).catch((error) =>{
+				alert("Unsuccessful, error " + error);
+			});
+		  } else {
+			// User is signed out
+			// ...
+			alert("User Signed Out");
+		  }
+		});
+	}
+		
+		
+		
+	window.onload = Check();
+	withdrawBtn.addEventListener('click', Withdraw);
+			
+</script>

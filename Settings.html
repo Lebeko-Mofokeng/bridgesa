@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content = "IE=edge">
+	<meta name = "viewport" content= "width=device-width, initial-scale=1.0">
+	<title>Settings</title>
+	<link rel = "stylesheet" href= "stylingnavigationbar.css">
+</head>
+<body>
+	<nav>
+	
+		<ul>
+			<li>
+				<a href="#">Settings</a>
+				<ul class = "dropdown">
+					<li><a href="Home.html">Home</a></li>
+				<li><a href="Investment.html">Investment</a></li>
+				<li><a href="Feedback.html">Feedback</a></li>
+				<li><a href="Settings.html">Settings</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<!--<div class="logo">
+			<p>Home</p>
+			<ul class = "dropdown">
+				
+			</ul>
+		</div>-->
+		<ul>
+			<li><a href="Home.html">Home</a></li>
+			<li><a href="Investment.html">Investment</a></li>
+			<li>
+				<a href="Settings.html">Settings</a>
+				<ul class = "dropdown">
+					<li><a id = "changesp" href="ChangeSharePrice.html">Change Share Price</a></li>
+					<li><a id = "updatePI" href="UpdatePersonalInfo.html">Update Personal Information</a></li>
+					<li><a id = "security">Security</a></li>
+					<!--href="Security.html"-->
+					<li><a id = "legalP">Legal & Policies</a></li>
+					<!--href="LegalandPolicies.html"-->
+					<li><a href="Signout.html">Sign Out</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		
+		
+		
+	</nav>
+	
+	<div class = "homeul">
+		<div class = "input-group">
+			<button id = "signoutbtn" type = "submit" class = "submit-btn">Signout</button><br>
+			<ul>
+				<li><a id = "changesp2" href="ChangeSharePrice.html">Change Share Price</a></li>
+				<li><a id = "updatePI" href="UpdatePersonalInfo.html">Update Personal Information</a></li>
+			<ul>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+</body>
+</html>
+
+<script type="module">
+	// Import the functions you need from the SDKs you need
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+	import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+	import { getDatabase, set, ref, child, get } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+	import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+	//import { getDatabase, ref as ref_database, set, child, update, remove, get  } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+	// TODO: Add SDKs for Firebase products that you want to use
+	// https://firebase.google.com/docs/web/setup#available-libraries
+
+	// Your web app's Firebase configuration
+	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	const firebaseConfig = {
+	apiKey: "AIzaSyDecaBFp1bFl_VO2hu4mdAUGlFpa-mopeI",
+	authDomain: "bridgefa-fa2da.firebaseapp.com",
+	databaseURL: "https://bridgefa-fa2da-default-rtdb.firebaseio.com",
+	projectId: "bridgefa-fa2da",
+	storageBucket: "bridgefa-fa2da.appspot.com",
+	messagingSenderId: "228760175922",
+	appId: "1:228760175922:web:882bbc45d2a796184f432b",
+	measurementId: "G-XPEBH2CP8G"
+	};
+	// Initialize Firebase
+	const app = initializeApp(firebaseConfig);
+	const analytics = getAnalytics(app);
+	const database = getDatabase(app);
+	const auth = getAuth(app);
+	
+	var changesp = document.getElementById("changesp");
+	var changesp2 = document.getElementById("changesp2");
+	var updatePI = document.getElementById("updatePI");
+	var security = document.getElementById("security");
+	var legalP = document.getElementById("legalP");
+	
+	function NotAvailable(){
+		alert("Currently Not Available");
+	}
+	  
+	security.addEventListener('click', NotAvailable); 
+	legalP.addEventListener('click', NotAvailable);
+	
+	function Check(){
+		var company = "Company";
+		
+		//var email = document.getElementById("userEmail");
+						
+			onAuthStateChanged(auth, (user) => {
+			if (user) {
+				// User is signed in, see docs for a list of available properties
+				// https://firebase.google.com/docs/reference/js/firebase.User
+				const uid = user.uid;
+				const dbRef = ref(database);
+				
+				get(child(dbRef, 'Users/' + uid)).then((snapshot)=>{
+					if(snapshot.exists()){
+						//email.innerHTML = snapshot.val().email;
+						var type = snapshot.val().userType;
+						if(type == company){
+							
+						}else{
+							changesp.style.display = "none";
+							changesp2.style.display = "none";
+						}
+					}else{
+						alert("No Data");
+					}
+				}).catch((error) =>{
+					alert("Unsuccessful, error " + error);
+				});
+			} else {
+				// User is signed out
+				// ...
+				alert("User Signed Out");
+			  }
+			});
+	}
+	
+	var btnSignOut = document.getElementById("signoutbtn");
+	
+	function SignOut(){
+		signOut(auth).then(() => {
+		  alert('Successfully Signed Out');
+		  window.location.assign("index.html");
+		}).catch((error) => {
+		  alert('Error '+ error);
+		});
+	}
+	
+	btnSignOut.addEventListener('click', SignOut);
+	
+	window.onload = Check();
+	
+	  
+			
+</script>
